@@ -2,14 +2,10 @@ import { z } from "zod";
 
 export const createIssueSchema = z.object({
   title: z
-    .string({
+    .string()
+    .min(1, {
       message: "Title is required",
     })
-    .trim()
-    .min(3, {
-      message: "Title needs to have min 3 characters",
-    }),
-  description: z.string({ message: "Description is required" }).trim().min(5, {
-    message: "Description needs to have min 5 characters",
-  }),
+    .max(255),
+  description: z.string().min(1, { message: "Description is required" }),
 });

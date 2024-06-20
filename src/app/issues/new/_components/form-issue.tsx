@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { createIssue } from "@/app/actions/create-issue";
 import { createIssueSchema } from "@/app/actions/create-issue/schema";
 import { IssueFormType } from "@/app/actions/create-issue/types";
 import { Button } from "@/components/ui/button";
@@ -41,8 +42,14 @@ export const FormIssue = () => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data) => {
-          console.warn(data);
+        onSubmit={form.handleSubmit(async (data) => {
+          const formData = new FormData();
+          formData.append("title", data.title);
+          formData.append("description", data.description);
+
+          const response = await createIssue(formData);
+
+          console.log(response);
         })}
         className="max-w-xl space-y-3">
         <FormField
