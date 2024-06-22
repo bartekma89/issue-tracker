@@ -1,13 +1,24 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
 
-function IssuesPage() {
+import { Button } from "@/components/ui/button";
+
+import prisma from "@/lib/db";
+import TableIssues from "./_components/table-issues";
+
+async function IssuesPage() {
+  const issues = await prisma.issue.findMany();
+
+  console.log(issues);
+
   return (
-    <div>
-      <Button>
-        <Link href="/issues/new">New issue</Link>
-      </Button>
+    <div className="md:max-w-xl">
+      <div>
+        <Button className="mb-5">
+          <Link href="/issues/new">New Issue</Link>
+        </Button>
+      </div>
+      <TableIssues data={issues} />
     </div>
   );
 }
