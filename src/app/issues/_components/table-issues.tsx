@@ -11,6 +11,8 @@ import {
 
 import { Issue } from "@prisma/client";
 
+import { IssueStatus } from "./issue-status";
+
 interface TableIssuesProps {
   data: Issue[];
 }
@@ -31,9 +33,13 @@ export default function TableIssues({ data }: TableIssuesProps) {
             <TableRow key={createdAt.toString()}>
               <TableCell>
                 {title}
-                <div className="block md:hidden">{status}</div>
+                <div className="block md:hidden">
+                  <IssueStatus status={status} />
+                </div>
               </TableCell>
-              <TableCell className="hidden md:table-cell">{status}</TableCell>
+              <TableCell className="hidden md:table-cell">
+                <IssueStatus status={status} />
+              </TableCell>
               <TableCell className="hidden md:table-cell">
                 {createdAt.toDateString()}
               </TableCell>
