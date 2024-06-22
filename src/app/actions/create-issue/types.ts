@@ -1,5 +1,5 @@
 import { z } from "zod";
 
-import { createIssueSchema } from "./schema";
+import { CreateIssueSchema } from "./schema";
 
-export type IssueFormType = z.infer<typeof createIssueSchema>;
+export type IssueType = z.infer<typeof CreateIssueSchema>;

@@ -1,12 +1,16 @@
 "use server";
 
-import { createIssueSchema } from "./schema";
+import { FieldErrors } from "@/app/types";
 import prisma from "@/lib/db";
 
+import { IssueType } from "./types";
+import { CreateIssueSchema } from "./schema";
+
 type FormDataType = {
-  message: string;
-  id?: number;
-  issues?: string[];
+  fieldErrors?: FieldErrors<IssueType>;
+  message?: string;
+  success?: number;
+  error?: string;
 };
 
 export const createIssue = async (data: FormData): Promise<FormDataType> => {
@@ -15,12 +19,12 @@ export const createIssue = async (data: FormData): Promise<FormDataType> => {
     success,
     data: parsedData,
     error,
-  } = createIssueSchema.safeParse(formData);
+  } = CreateIssueSchema.safeParse(formData);
 
   if (!success) {
     return {
-      message: "Invalid Data.",
-      issues: error.issues.map((issue) => issue.message),
+      fieldErrors: error.flatten().fieldErrors as FieldErrors<IssueType>,
+      message: "Missing Fields. Failed to Create Issue.",
     };
   }
 
@@ -33,12 +37,12 @@ export const createIssue = async (data: FormData): Promise<FormDataType> => {
     });
 
     return {
-      id: newIssue.id,
-      message: "Issue Created.",
+      message: "The Issue Created.",
+      success: newIssue.id,
     };
   } catch {
     return {
-      message: "Database Error: Failed to Create Issue.",
+      error: "Database Error: Failed to Create Issue.",
     };
   }
 };
