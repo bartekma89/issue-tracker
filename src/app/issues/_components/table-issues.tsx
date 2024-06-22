@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
 import { Issue } from "@prisma/client";
 
 import { IssueStatus } from "./issue-status";
