@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -33,7 +34,9 @@ export function TableIssues({ data }: TableIssuesProps) {
           return (
             <TableRow key={createdAt.toString()}>
               <TableCell>
-                <Link href={`${Routes.ISSUES}/${id}`}>{title}</Link>
+                <Button variant="link" className="text-black">
+                  <Link href={`${Routes.ISSUES}/${id}`}>{title}</Link>
+                </Button>
                 <div className="block md:hidden">
                   <IssueStatus status={status} />
                 </div>

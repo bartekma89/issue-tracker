@@ -4,7 +4,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 import prisma from "@/lib/db";
 import { IssueStatus } from "../_components/issue-status";
-import Link from "next/link";
 import { LinkHandler } from "./_components/LinkHandler";
 
 interface IssueDetailsProps {
@@ -29,7 +28,7 @@ async function IssueDetailsPage({ params }: IssueDetailsProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-xl">
       <h2 className="text-3xl font-bold">{issue.title}</h2>
       <div className="flex space-x-3">
         <IssueStatus status={issue.status} />
@@ -39,8 +38,8 @@ async function IssueDetailsPage({ params }: IssueDetailsProps) {
         <MDXRemote
           source={issue.description}
           components={{
-            a: (props) => (
-              <LinkHandler href={props.href}>{props.children}</LinkHandler>
+            a: ({ href, children }) => (
+              <LinkHandler href={href}>{children}</LinkHandler>
             ),
           }}
         />
