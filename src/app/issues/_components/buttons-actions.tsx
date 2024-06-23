@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Routes } from "@/constants";
 
-export default function ButtonsActions() {
+export function ButtonsActions() {
   return (
     <div className="mb-5">
       <Button>

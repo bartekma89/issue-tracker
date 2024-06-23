@@ -8,10 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { ButtonsActions } from "./_components/buttons-actions";
+
 export default function Loading() {
   const issuesItems = [1, 2, 3, 4, 5];
   return (
-    <div className="md:max-w-xl">
+    <div>
+      <ButtonsActions />
       <Table className="border">
         <TableHeader className="bg-muted/50">
           <TableRow>

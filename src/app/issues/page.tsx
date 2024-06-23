@@ -2,13 +2,15 @@ import React from "react";
 
 import prisma from "@/lib/db";
 
-import TableIssues from "./_components/table-issues";
+import { ButtonsActions } from "./_components/buttons-actions";
+import { TableIssues } from "./_components/table-issues";
 
 async function IssuesPage() {
   const issues = await prisma.issue.findMany();
 
   return (
-    <div className="md:max-w-xl">
+    <div>
+      <ButtonsActions />
       <TableIssues data={issues} />
     </div>
   );

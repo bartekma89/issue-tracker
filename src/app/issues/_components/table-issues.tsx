@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import {
   Table,
@@ -11,12 +12,13 @@ import {
 import { Issue } from "@prisma/client";
 
 import { IssueStatus } from "./issue-status";
+import { Routes } from "@/constants";
 
 interface TableIssuesProps {
   data: Issue[];
 }
 
-export default function TableIssues({ data }: TableIssuesProps) {
+export function TableIssues({ data }: TableIssuesProps) {
   return (
     <Table className="border">
       <TableHeader className="bg-muted/50">
@@ -27,11 +29,11 @@ export default function TableIssues({ data }: TableIssuesProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map(({ createdAt, title, status }) => {
+        {data.map(({ createdAt, title, status, id }) => {
           return (
             <TableRow key={createdAt.toString()}>
               <TableCell>
-                {title}
+                <Link href={`${Routes.ISSUES}/${id}`}>{title}</Link>
                 <div className="block md:hidden">
                   <IssueStatus status={status} />
                 </div>

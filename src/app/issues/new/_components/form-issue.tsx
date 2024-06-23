@@ -34,7 +34,7 @@ const MDXEditor = dynamic(() => import("react-simplemde-editor"), {
   ),
 });
 
-export const FormIssue = () => {
+export function FormIssue() {
   const router = useRouter();
   const form = useForm<IssueType>({
     resolver: zodResolver(CreateIssueSchema),
@@ -108,4 +108,4 @@ export const FormIssue = () => {
       </form>
     </Form>
   );
-};
+}
