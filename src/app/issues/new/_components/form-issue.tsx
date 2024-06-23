@@ -22,8 +22,9 @@ import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Routes } from "@/constants";
 
-import "easymde/dist/easymde.min.css";
 import { Callout } from "./callout";
+
+import "easymde/dist/easymde.min.css";
 
 const MDXEditor = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
@@ -34,7 +35,7 @@ const MDXEditor = dynamic(() => import("react-simplemde-editor"), {
   ),
 });
 
-export const FormIssue = () => {
+export function FormIssue() {
   const router = useRouter();
   const form = useForm<IssueType>({
     resolver: zodResolver(CreateIssueSchema),
@@ -108,4 +109,4 @@ export const FormIssue = () => {
       </form>
     </Form>
   );
-};
+}

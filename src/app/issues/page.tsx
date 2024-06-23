@@ -1,13 +1,14 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import React from "react";
+import prisma from "@/lib/db";
 
-function IssuesPage() {
+import { ButtonsActions, TableIssues } from "./_components";
+
+async function IssuesPage() {
+  const issues = await prisma.issue.findMany();
+
   return (
     <div>
-      <Button>
-        <Link href="/issues/new">New issue</Link>
-      </Button>
+      <ButtonsActions />
+      <TableIssues data={issues} />
     </div>
   );
 }

@@ -1,6 +1,4 @@
-import React from "react";
-
-import { FormIssue } from "./_components/form-issue";
+import { FormIssue } from "./_components";
 
 function NewIssuePage() {
   return <FormIssue />;
