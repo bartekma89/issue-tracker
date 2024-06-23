@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { ButtonsActions } from "./_components/buttons-actions";
+import { ButtonsActions } from "./_components";
 
 export default function Loading() {
   const issuesItems = [1, 2, 3, 4, 5];

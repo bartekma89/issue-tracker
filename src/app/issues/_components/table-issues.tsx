@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -12,8 +11,8 @@ import {
 } from "@/components/ui/table";
 import { Issue } from "@prisma/client";
 
-import { IssueStatus } from "./issue-status";
 import { Routes } from "@/constants";
+import { IssueStatus } from "./issue-status";
 
 interface TableIssuesProps {
   data: Issue[];

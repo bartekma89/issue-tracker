@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import prisma from "@/lib/db";
-import { IssueStatus } from "../_components/issue-status";
-import { LinkHandler } from "./_components/LinkHandler";
+import { IssueStatus } from "../_components";
+import { LinkHandler } from "./_components";
 
 interface IssueDetailsProps {
   params: {
