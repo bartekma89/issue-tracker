@@ -1,2 +1,2 @@
 export { Callout } from "./callout";
-export { FormIssue } from "./form-issue";
+export { FormIssue } from "../../_components/form-issue";

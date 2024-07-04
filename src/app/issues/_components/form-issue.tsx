@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { createIssue } from "@/app/actions/create-issue";
-import { CreateIssueSchema } from "@/app/actions/create-issue/schema";
-import { IssueType } from "@/app/actions/create-issue/types";
+import { createIssue } from "@/app/actions/issue/create-issue";
+import { IssueSchema } from "@/app/actions/issue/schema";
+import { IssueType } from "@/app/actions/issue/types";
 import { FieldErrors } from "@/app/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,9 +22,11 @@ import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Routes } from "@/constants";
 
-import { Callout } from "./callout";
+import { Callout } from "../new/_components/callout";
 
 import "easymde/dist/easymde.min.css";
+import { Issue } from "@prisma/client";
+import { updateIssue } from "@/app/actions/issue/update-issue";
 
 const MDXEditor = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
@@ -35,13 +37,17 @@ const MDXEditor = dynamic(() => import("react-simplemde-editor"), {
   ),
 });
 
-export function FormIssue() {
+interface FormIssueProps {
+  issue?: Issue;
+}
+
+export function FormIssue({ issue }: FormIssueProps) {
   const router = useRouter();
   const form = useForm<IssueType>({
-    resolver: zodResolver(CreateIssueSchema),
+    resolver: zodResolver(IssueSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: issue?.title ?? "",
+      description: issue?.description ?? "",
     },
   });
   const [errors, setErrors] = useState<FieldErrors<IssueType> | string>();
@@ -54,17 +60,22 @@ export function FormIssue() {
     formData.append("description", data.description);
     setErrors(undefined);
 
-    const response = await createIssue(formData);
+    let response;
+
+    if (issue) {
+      response = await updateIssue(formData, issue.id);
+    } else {
+      response = await createIssue(formData);
+    }
 
     if (response.success) {
       router.push(Routes.ISSUES);
+    } else if (response.error) {
+      setErrors(response.error);
     }
 
     if (response.fieldErrors) {
       setErrors(response.fieldErrors);
-    }
-    if (response.error) {
-      setErrors(response.error);
     }
   };
 
@@ -101,7 +112,7 @@ export function FormIssue() {
           }}
         />
         <Button type="submit" disabled={formState.isSubmitting}>
-          Submit New Issue{" "}
+          {issue ? "Update Issue" : "Submit New Issue"}{" "}
           {formState.isSubmitting && (
             <LoadingSpinner className="w-6 h-6 ml-3" />
           )}
