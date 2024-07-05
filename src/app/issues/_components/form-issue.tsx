@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import MDXEditor from "react-simplemde-editor";
 
 import { createIssue } from "@/app/actions/issue/create-issue";
 import { IssueSchema } from "@/app/actions/issue/schema";
 import { IssueType } from "@/app/actions/issue/types";
 import { FieldErrors } from "@/app/types";
+import { updateIssue } from "@/app/actions/issue/update-issue";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,27 +22,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Routes } from "@/constants";
+import { Issue } from "@prisma/client";
 
 import { Callout } from "../new/_components/callout";
 
 import "easymde/dist/easymde.min.css";
-import { Issue } from "@prisma/client";
-import { updateIssue } from "@/app/actions/issue/update-issue";
-
-const MDXEditor = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex justify-center items-center p-7">
-      <LoadingSpinner />
-    </div>
-  ),
-});
 
 interface FormIssueProps {
   issue?: Issue;
 }
 
-export function FormIssue({ issue }: FormIssueProps) {
+export default function FormIssue({ issue }: FormIssueProps) {
   const router = useRouter();
   const form = useForm<IssueType>({
     resolver: zodResolver(IssueSchema),
